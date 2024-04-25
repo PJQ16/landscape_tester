@@ -1,0 +1,113 @@
+import React, { useContext, useState } from "react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import Modal from "../components/Modal";
+import { Link, useParams } from "react-router-dom";
+import './page.css'
+import { UserContext } from "../components/MyContext";
+import SidebarActivity from "../components/SidebarActivity";
+
+export default function Location() {
+  const {userData} = useContext(UserContext);
+  const [images, setImages] = useState([]);
+  const {years,id} = useParams();
+
+  const handleImageChange = (e) => {
+    const selectedImage = e.target.files[0];
+
+    if (selectedImage) {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        const imageUrl = event.target.result;
+
+        setImages((prevImages) => [...prevImages, imageUrl]);
+      };
+
+      reader.readAsDataURL(selectedImage);
+    }
+  };
+
+  const handleImageClick = (index) => {
+    // Handle image click, e.g., open a modal or navigate to a detail page
+    console.log("Image clicked:", index);
+  };
+
+  const handleImageDelete = (index) => {
+    const updatedImages = [...images];
+    updatedImages.splice(index, 1);
+    setImages(updatedImages);
+  };
+
+  const backgroundImageStyle = {
+    backgroundImage: 'url("/img/cloud.jpg")',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  };
+
+  return (
+    <div id="page-top">
+      <div id="wrapper">
+        <SidebarActivity />
+        <div id="content-wrapper" className="d-flex flex-column" style={backgroundImageStyle}>
+          <Navbar />
+          <div id="content">
+            <div className="container-fluid">
+              <span className="h1 text-dark">{userData.campusName} {userData.facultyName}{years} {id}</span>
+              <p className="m-2">คำอธิบายหน้า</p>
+
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="container rounded">
+                    <p>ต้องใช้รูปภาพขนาด กว้าง ( 700 px ) X ( 300 px ) สูง</p>
+                    <label htmlFor="imageInput" className="custom-file-upload">
+                      <i className="fa fa-cloud-upload"></i> เลือกไฟล์
+                    </label>
+                    <input type="file" id="imageInput" accept="image/*" onChange={handleImageChange} />
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <div className="container rounded">
+                    {images.map((image, index) => (
+                      <div key={index} className="image-container">
+                        <img
+                          src={image}
+                          alt={`Image ${index}`}
+                          className="img-thumbnail"
+                          onClick={() => handleImageClick(index)}
+                        />
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => handleImageDelete(index)}
+                        >
+                          ลบ
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <Footer />
+        </div>
+      </div>
+
+      <a className="scroll-to-top rounded" href="#page-top">
+        <i className="fas fa-angle-up"></i>
+      </a>
+      <Modal id="logoutModal" title="ออกจากระบบ">
+        Select "Logout" below if you are ready to end your current session.
+        <div className="modal-footer">
+          <button className="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancel
+          </button>
+          <Link className="btn btn-primary" to="/">
+            Logout
+          </Link>
+        </div>
+      </Modal>
+    </div>
+  );
+}
