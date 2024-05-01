@@ -40,7 +40,7 @@ export default function Sidebar() {
           to="/"
           onClick={() => handleMenuClick("dashboard")}
         >
-          <i class="fa-solid fa-house"></i>
+          <i className="fa-solid fa-house"></i>
           <span>หน้าแรก</span>
         </Link>
       </li>
@@ -131,7 +131,7 @@ export default function Sidebar() {
     aria-controls="collapseTwo"
     onClick={() => handleMenuClick("components")}
   >
-  <i class="fa-solid fa-bars"></i>
+  <i className="fa-solid fa-bars"></i>
     <span>การตั้งค่า</span>
   </Link>
   <div
@@ -143,10 +143,10 @@ export default function Sidebar() {
     <div className="bg-white py-2 collapse-inner rounded">
       <h6 className="collapse-header">Custom Components:</h6>
       <Link className="collapse-item" >
-      <i class="fa-solid fa-square-poll-vertical"></i> google map key api
+      <i className="fa-solid fa-square-poll-vertical"></i> google map key api
       </Link>
       <Link className="collapse-item">
-      <i class="fa-solid fa-file-pdf"></i> การแสดงผลของ หัวข้อ head activity
+      <i className="fa-solid fa-file-pdf"></i> การแสดงผลของ หัวข้อ head activity
       </Link>
     </div>
   </div>

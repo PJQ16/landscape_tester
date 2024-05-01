@@ -9,8 +9,7 @@ export default function Dashboard() {
       }, []);
       const fetchDataScope = async() =>{
         try{
-            const res = await axios.get(config.urlApi + '/scope/currentApishow')
-            setDataScope(res.data);
+            
 
         }catch(e){
             console.log(e.message);
@@ -20,16 +19,7 @@ export default function Dashboard() {
   return (
     <div>
     <div className="row">
-     {dataScope.map((item, index) => (
-        <div key={index} className='col-md-3'>
-          <div className="card" style={{ backgroundColor: index % 2 === 0 ? '#9E76B4' : '#B3B476' }}>
-            <div className="card-body shadow-sm text-white">
-              <i className="fas fa-leaf fa-5x"></i>
-              {item.name}  {parseFloat(item.tco2e).toFixed(2)} <span className='fw-bold'>tCO<sub>2</sub>e</span>
-            </div>
-          </div>
-        </div>
-      ))}
+     
       </div>
     
   

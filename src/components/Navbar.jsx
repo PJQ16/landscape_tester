@@ -32,7 +32,7 @@ export default function Navbar() {
             });
           }
         } catch (error) {
-          navigate('/');
+          navigate('/login');
         }
       };
       

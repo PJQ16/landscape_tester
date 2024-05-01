@@ -68,8 +68,6 @@ export default function CateScope() {
                           {gases.map((gas) => (
                             <th>{gas}</th>
                           ))}
-                          <th>เปิด</th>
-                          <th>ปิด</th>
                           <th>เมนู</th>
                         </tr>
                       </thead>
@@ -91,29 +89,6 @@ export default function CateScope() {
                           <td>{item.GWP_PFCs}</td>
                           <td>{item.kgCO2e}</td>
                           <td>{item.sources}</td>
-                          <td>
-                            <div className="form-check">
-                              <input
-                                className="form-check-input"
-                                type="radio"
-                                name={`flexRadioDefault${index}`}
-                                id={`flexRadioDefault${item.id}`}
-                                value={index}
-                                checked
-                              />
-                            </div>
-                          </td>
-                          <td>
-                            <div className="form-check">
-                              <input
-                                className="form-check-input"
-                                type="radio"
-                                name={`flexRadioDefault${index}`}
-                                id={`flexRadioDefaultChecked${item.id}`}
-                                value={index}
-                              />
-                            </div>
-                          </td>
                           <td>
                             <div className="btn-group">
                               <button
@@ -148,15 +123,10 @@ export default function CateScope() {
                           {gases.map((gas) => (
                             <th>{gas}</th>
                           ))}
-                          <th>เปิด</th>
-                          <th>ปิด</th>
                           <th>เมนู</th>
                         </tr>
                       </tfoot>
                     </table>
-                    <button className="btn btn-secondary hover:bg-primary">
-                      บันทึก
-                    </button>
                   </div>
                 </Pages>
             </div>

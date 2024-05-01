@@ -115,6 +115,7 @@ export default function Activity() {
                           {periods.map((item) => (
                         item.fac_id === userData.facultyID ? (
                           <Link
+                            className="text-decoration-none"
                             to={`/CFO/${item.years + 543}`}
                             key={item.years}
                           >

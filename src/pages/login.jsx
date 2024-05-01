@@ -140,7 +140,7 @@ const validatePassword = () => {
                   className='d-flex justify-content-center align-items-center'
                   style={{ height: '100%', borderRadius: '50%', overflow: 'hidden', position: 'relative' }}
                 >
-                  <img src='/img/factory.jpg' className='rounded-circle' alt='รูปภาพ' style={{ width: '100%', height: 'auto', opacity: 0.9 }} />
+                  <img src='img/factory.jpg' className='rounded-circle' alt='รูปภาพ' style={{ width: '100%', height: 'auto', opacity: 0.9 }} />
                 </div>
               </div>
             </div>

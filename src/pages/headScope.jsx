@@ -47,8 +47,6 @@ export default function HeadScope() {
                 <tr>
                     <th>ลำดับ</th>
                     <th>รูปแบบการเก็บข้อมูล</th>
-                    <th>เปิด</th>
-                    <th>ปิด</th>
                     <th>เมนู</th>
                 </tr>
             </thead>
@@ -56,19 +54,7 @@ export default function HeadScope() {
             {campus.map((item, index) =>
     <tr key={index}>
         <td>{index + 1}</td>
-        <td><Link className="text-decoration-none"  to={`/scope/${id}/${item.id}`} >{item.head_name}</Link></td>
-        <td>
-            <div className="form-check">
-                <input className="form-check-input" type="radio" name={`flexRadioDefault${index}`} id={`flexRadioDefault${item.id}`} value={index} checked />
-    
-            </div>
-        </td>
-        <td>
-            <div className="form-check">
-                <input className="form-check-input" type="radio" name={`flexRadioDefault${index}`} id={`flexRadioDefaultChecked${item.id}`}  value={index} />
-                
-            </div>
-        </td>
+        <td><Link className="text-decoration-none text-dark"  to={`/scope/${id}/${item.id}`} >{item.head_name}</Link></td>
         <td><div className="btn-group">
   <button type="button" className="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
   </button>
@@ -84,13 +70,10 @@ export default function HeadScope() {
             <tr>
                     <th>ลำดับ</th>
                     <th>รูปแบบการเก็บข้อมูล</th>
-                    <th>เปิด</th>
-                    <th>ปิด</th>
                     <th>เมนู</th>
                 </tr>
             </tfoot>
         </table>
-        <button className='btn btn-secondary hover:bg-primary'>บันทึก</button>
         </div>
                         
                     

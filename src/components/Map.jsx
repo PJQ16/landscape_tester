@@ -39,10 +39,13 @@ function Map() {
   }
   
 
+
+  const keyapi = 'AIzaSyDGCeNt10W2VmFltZC-vARnDltrKjtBQos';
+
   
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyDGCeNt10W2VmFltZC-vARnDltrKjtBQos"
+    googleMapsApiKey: keyapi
   });
 
   const [map, setMap] = useState(null);
