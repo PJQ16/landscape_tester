@@ -16,7 +16,7 @@ export default function Sidebar() {
     >
       <Link
         className="sidebar-brand d-flex align-items-center justify-content-center"
-        to="/dashboard"
+        to="/"
       >
         <div className="sidebar-brand-text mx-3" style={{ marginTop: "30px" }}>
           <img
@@ -37,7 +37,7 @@ export default function Sidebar() {
       <li className={`nav-item ${activeMenu === "หน้าแรก" ? "active" : ""}`}>
         <Link
           className="nav-link"
-          to="/dashboard"
+          to="/"
           onClick={() => handleMenuClick("dashboard")}
         >
           <i class="fa-solid fa-house"></i>

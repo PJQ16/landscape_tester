@@ -22,7 +22,7 @@ const handlerLogin = async () => {
       }
     
      
-      const res = await axios.post(config.urlApi + '/users/login', payload)
+      const res = await axios.post(config.urlApi + '/admin/login', payload)
 
       if (res.data.message === 'success') {
           Swal.fire({
@@ -33,7 +33,7 @@ const handlerLogin = async () => {
               timerProgressBar: true
           })
           localStorage.setItem(config.token_name, res.data.token);
-          navigate('/dashboard');
+          navigate('/');
       } else if (res.data.message === 'User not found'){
           Swal.fire({
               title: 'Sign In',

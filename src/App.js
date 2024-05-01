@@ -28,7 +28,7 @@ export default function App() {
     <UserDataProvider>
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/dashboard" element={<Layout />} />
+      <Route path="/" element={<Layout />} />
       <Route path="/campusManagement" element={<Campus />} />
       <Route path="/faculty/:id" element={<Faculty />} />
       <Route path="/structure/:fac_id/:years/:employee_amount/:building_area" element={<Structure />} />
