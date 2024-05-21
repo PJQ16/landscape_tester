@@ -47,7 +47,7 @@ const handlerLogin = async () => {
       Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: e.message
+          text: 'อีเมล์ หรือ รหัสผ่านไม่ถูกต้อง'
       })
   }
 }
@@ -126,11 +126,11 @@ const validatePassword = () => {
               </button> }
              
 
-              <Link to='/register'>
+              {/* <Link to='/register'>
                 <button className='btn btn-primary shadow-sm ms-2'>
                   <i className='fa-solid fa-address-card'></i> สมัครสมาชิก
                 </button>
-              </Link>
+              </Link> */}
             </div>
           </div>
           <div className='rounded col-md-5 p-4 mx-1 mt-5'>

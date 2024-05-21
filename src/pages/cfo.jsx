@@ -12,6 +12,7 @@ export default function CFO() {
   const [campusData, setCampusData] = useState([]);
   const [selectedCampus, setSelectedCampus] = useState("");
   const [selectedFaculty, setSelectedFaculty] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const { years } = useParams();
 
   useEffect(() => {
@@ -21,7 +22,7 @@ export default function CFO() {
   const fetchData = async () => {
     try {
       const res = await axios.get(
-        config.urlApi + `/activityperiod/${years - 543}`
+        `${config.urlApi}/activityperiod/${parseInt(years) - 543}`
       );
       setCampusData(res.data);
     } catch (e) {
@@ -37,45 +38,36 @@ export default function CFO() {
   const handleFacultyChange = (e) => {
     setSelectedFaculty(e.target.value);
   };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
   const getActivityStatus = (status) => {
     switch (status) {
       case "0":
         return (
-          <i
-            className="fa-solid fa-circle-dot"
-            style={{ color: "#979494" }}
-          ></i>
+          <i className="fa-solid fa-circle-dot" style={{ color: "#979494" }}></i>
         );
       case "1":
         return (
-          <i
-            className="fa-solid fa-circle-dot"
-            style={{ color: "#D9C760" }}
-          ></i>
+          <i className="fa-solid fa-circle-dot" style={{ color: "#D9C760" }}></i>
         );
       case "2":
         return (
-          <i
-            className="fa-solid fa-circle-dot"
-            style={{ color: "#8ED960" }}
-          ></i>
+          <i className="fa-solid fa-circle-dot" style={{ color: "#8ED960" }}></i>
         );
       case "3":
         return (
-          <i
-            className="fa-solid fa-circle-dot"
-            style={{ color: "#D96460" }}
-          ></i>
+          <i className="fa-solid fa-circle-dot" style={{ color: "#D96460" }}></i>
         );
       default:
         return (
-          <i
-            className="fa-solid fa-circle-dot"
-            style={{ color: "#ffffff" }}
-          ></i>
+          <i className="fa-solid fa-circle-dot" style={{ color: "#ffffff" }}></i>
         );
     }
   };
+
   return (
     <div>
       <div id="wrapper">
@@ -88,7 +80,7 @@ export default function CFO() {
                 <div className="row mt-3">
                   <div className="col-md-2">
                     <label style={{ color: "rgb(161, 143, 232)" }}>
-                      วิทยาเขต
+                      <i className="fa-solid fa-land-mine-on"></i> วิทยาเขต
                     </label>
                     <select
                       className="form-control"
@@ -106,7 +98,7 @@ export default function CFO() {
 
                   <div className="col-md-2">
                     <label style={{ color: "rgb(161, 143, 232)" }}>
-                      หน่วยงาน
+                      <i className="fa-regular fa-building"></i> หน่วยงาน
                     </label>
                     <select
                       className="form-control"
@@ -116,9 +108,7 @@ export default function CFO() {
                       <option value="">เลือกหน่วยงาน</option>
                       {selectedCampus &&
                         campusData
-                          .find(
-                            (campus) => campus.campus_name === selectedCampus
-                          )
+                          .find((campus) => campus.campus_name === selectedCampus)
                           .faculties.map((faculty, index) => (
                             <option key={index} value={faculty.fac_name}>
                               {faculty.fac_name}
@@ -126,7 +116,21 @@ export default function CFO() {
                           ))}
                     </select>
                   </div>
-                  <div className="col-md-7">
+
+                  <div className="col-md-2">
+                    <label style={{ color: "rgb(161, 143, 232)" }}>
+                      <i className="fa-solid fa-magnifying-glass-location"></i>{" "}
+                      ค้นหา
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={searchTerm}
+                      onChange={handleSearchChange}
+                    />
+                  </div>
+
+                  <div className="col-md-5">
                     <div className="d-flex justify-content-end">
                       <div className="border border-1 bg-white shadow-sm p-2 rounded-sm">
                         <div style={{ display: "flex", alignItems: "center" }}>
@@ -174,7 +178,6 @@ export default function CFO() {
                   <table className="table table-striped table-bordered table-hover">
                     <thead className="text-center">
                       <tr>
-                        <th>ลำดับ</th>
                         <th>วิทยาเขต</th>
                         <th>หน่วยงาน</th>
                         <th>สถานะการตรวจสอบ</th>
@@ -202,10 +205,24 @@ export default function CFO() {
                               }
                             })
                             .map((faculty, index) =>
-                              faculty.activityperiods.map(
-                                (activityperiod, n) => (
+                              faculty.activityperiods
+                                .filter((activityperiod) => {
+                                  // กรองตามคำค้นหาในชื่อหน่วยงานหรือวิทยาเขต
+                                  if (searchTerm) {
+                                    return (
+                                      faculty.fac_name
+                                        .toLowerCase()
+                                        .includes(searchTerm.toLowerCase()) ||
+                                      campus.campus_name
+                                        .toLowerCase()
+                                        .includes(searchTerm.toLowerCase())
+                                    );
+                                  } else {
+                                    return true;
+                                  }
+                                })
+                                .map((activityperiod, n) => (
                                   <tr key={n} className="text-center">
-                                    <td>{index + 1}</td>
                                     <td>{campus.campus_name}</td>
                                     <td>{faculty.fac_name}</td>
                                     <td>
@@ -216,7 +233,7 @@ export default function CFO() {
                                     <td>
                                       <Link
                                         className="text-decoration-none text-dark"
-                                        to={`/activityperiod/Info/${activityperiod.id}`}
+                                        to={`/activityperiod/Info/${activityperiod.id}/${years}`}
                                       >
                                         <i
                                           className="fa-solid fa-eye fa-2x"
@@ -227,14 +244,12 @@ export default function CFO() {
                                       </Link>
                                     </td>
                                   </tr>
-                                )
-                              )
+                                ))
                             )
                         )}
                     </tbody>
                     <tfoot className="text-center">
                       <tr>
-                        <th>ลำดับ</th>
                         <th>วิทยาเขต</th>
                         <th>หน่วยงาน</th>
                         <th>สถานะการตรวจสอบ</th>

@@ -22,6 +22,7 @@ export default function Navbar() {
             setUserData({
               firstname: response.data.result.fname,
               surname: response.data.result.sname,
+              email:response.data.result.email,
               roleName: response.data.result.role.role_name,
               facultyName: response.data.result.faculty.fac_name,
               campusName: response.data.result.faculty.campus.campus_name,

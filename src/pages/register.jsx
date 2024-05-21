@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
 import axios from "axios";
 import config from "../config";
 import Swal from "sweetalert2";
+import { UserContext } from "../components/MyContext";
 
 
 export default function Register() {
@@ -16,12 +17,36 @@ export default function Register() {
   const [faculties, setFaculties] = useState([]);
   const [selectedFacultyId, setSelectedFacultyId] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const navigate = useNavigate();
+  const { userData, setUserData } = useContext(UserContext);
+    const navigate = useNavigate();
   const qs = require('qs');
 
   useEffect(() => {
     fetSelectData();
+    fetchData();
   }, []);
+
+const fetchData = async () => {
+    try {
+      const response = await axios.get(config.urlApi + '/users/showUserApi', config.headers());
+  
+      if (response.data.message === 'success') {
+        setUserData({
+          firstname: response.data.result.fname,
+          surname: response.data.result.sname,
+          roleName: response.data.result.role.role_name,
+          facultyName: response.data.result.faculty.fac_name,
+          campusName: response.data.result.faculty.campus.campus_name,
+          facultyID : response.data.result.faculty.id,
+          campusID : response.data.result.faculty.campus_id,
+          latitude: response.data.result.faculty.latitude,
+          longitude: response.data.result.faculty.campus_id
+        });
+      }
+    } catch (error) {
+      navigate('/login');
+    }
+  };
 
   const fetSelectData = async () => {
     try {
@@ -211,7 +236,7 @@ export default function Register() {
               <div className="col-md-12 mt-2">
               <button className="btn btn-primary" onClick={handlerRegister}><i className="fa-solid fa-address-card"></i> สมัครสมาชิก</button>
            
-              <Link to="/login">
+              <Link to="/user">
                 <button className="btn btn-secondary shadow-sm ms-2">
                   <i className="fa-solid fa-right-to-bracket"></i> กลับ
                 </button>

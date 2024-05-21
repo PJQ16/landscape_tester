@@ -97,6 +97,8 @@ export default function Faculty() {
     }
   };
 
+
+
   return (
     <div>
       <div id="wrapper">
@@ -170,11 +172,7 @@ export default function Faculty() {
                                     แก้ไข
                                   </a>
                                 </li>
-                                <li>
-                                  <a className="dropdown-item" href="#">
-                                    <i className="fa-solid fa-trash"></i> ลบ
-                                  </a>
-                                </li>
+                                
                               </ul>
                             </div>
                           </td>

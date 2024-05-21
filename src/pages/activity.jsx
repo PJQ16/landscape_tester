@@ -119,14 +119,10 @@ export default function Activity() {
                             to={`/CFO/${item.years + 543}`}
                             key={item.years}
                           >
+                          
                             <li className="list-group-item d-flex justify-content-between align-items-center">
                               <span className="text-decoration-none">{item.years + 543}</span>
-                              <span
-                                className="badge rounded-pill"
-                                style={{ backgroundColor: "#a18fe8" }}
-                              >
-                                14
-                              </span>
+                              
                             </li>
                           </Link>
                         ) : null

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Sidebar() {
   const [activeMenu, setActiveMenu] = useState("dashboard");
@@ -10,11 +10,11 @@ export default function Sidebar() {
 
   return (
     <ul
-      className="navbar-nav sidebar sidebar-dark accordion "
+      className="navbar-nav sidebar sidebar-dark accordion"
       style={{ backgroundColor: "#a18fe8" }}
       id="accordionSidebar"
     >
-      <Link
+      <NavLink
         className="sidebar-brand d-flex align-items-center justify-content-center"
         to="/"
       >
@@ -30,130 +30,121 @@ export default function Sidebar() {
             }}
           />
         </div>
-      </Link>
+      </NavLink>
 
       <hr className="sidebar-divider" />
 
       <li className={`nav-item ${activeMenu === "หน้าแรก" ? "active" : ""}`}>
-        <Link
+        <NavLink
           className="nav-link"
           to="/"
-          onClick={() => handleMenuClick("dashboard")}
+          onClick={() => handleMenuClick("หน้าแรก")}
+       
         >
           <i className="fa-solid fa-house"></i>
           <span>หน้าแรก</span>
-        </Link>
+        </NavLink>
       </li>
 
       <hr className="sidebar-divider my-0" />
 
       <li className={`nav-item ${activeMenu === "คำอธิบาย" ? "active" : ""}`}>
-        <Link
+        <NavLink
           className="nav-link"
           to="/about"
-          onClick={() => handleMenuClick("about")}
+          onClick={() => handleMenuClick("คำอธิบาย")}
+       
         >
-        <i className="fa-solid fa-circle-info"></i>
+          <i className="fa-solid fa-circle-info"></i>
           <span>คำอธิบาย</span>
-        </Link>
+        </NavLink>
       </li>
-
-     
 
       <hr className="sidebar-divider my-0" />
 
-    <li className={`nav-item ${activeMenu === "activity" ? "active" : ""}`}>
-      <Link
-        className="nav-link"
-        to="/activity"
-        onClick={() => handleMenuClick("activity")}
-      >
-     <i className="fa-solid fa-cloud"></i>
-        <span>เพิ่มกิจกรรมการปล่อยก๊าซเรือนกระจก</span>
-      </Link>
-    </li>
-    
-    <hr className="sidebar-divider my-0" />
+      <li className={`nav-item ${activeMenu === "activity" ? "active" : ""}`}>
+        <NavLink
+          className="nav-link"
+          to="/activity"
+          onClick={() => handleMenuClick("activity")}
+         
+        >
+          <i className="fa-solid fa-cloud"></i>
+          <span>เพิ่มกิจกรรมการปล่อยก๊าซเรือนกระจก</span>
+        </NavLink>
+      </li>
 
-<li className={`nav-item ${activeMenu === "activity" ? "active" : ""}`}>
-  <Link
-    className="nav-link"
-    to="/user"
-    onClick={() => handleMenuClick("user")}
-  >
+      <hr className="sidebar-divider my-0" />
 
-<i className="fa-solid fa-user-large"></i>
-    <span>ผู้เข้าใช้งานระบบ</span>
-  </Link>
-</li>
+      <li className={`nav-item ${activeMenu === "user" ? "active" : ""}`}>
+        <NavLink
+          className="nav-link"
+          to="/user"
+          onClick={() => handleMenuClick("user")}
+         
+        >
+          <i className="fa-solid fa-user-large"></i>
+          <span>ผู้เข้าใช้งานระบบ</span>
+        </NavLink>
+      </li>
 
+      <hr className="sidebar-divider my-0" />
 
-<hr className="sidebar-divider my-0" />
+      <li className={`nav-item ${activeMenu === "campusManagement" ? "active" : ""}`}>
+        <NavLink
+          className="nav-link"
+          to="/campusManagement"
+          onClick={() => handleMenuClick("campusManagement")}
+         
+        >
+          <i className="fa-solid fa-school"></i>
+          <span>วิทยาเขต และหน่วยงาน</span>
+        </NavLink>
+      </li>
 
-<li className={`nav-item ${activeMenu === "activity" ? "active" : ""}`}>
-  <Link
-    className="nav-link"
-    to="/campusManagement"
-    onClick={() => handleMenuClick("campusManagement")}
-  >
+      <hr className="sidebar-divider my-0" />
 
-<i className="fa-solid fa-school"></i>
-    <span>วิทยาเขต และหน่วยงาน</span>
-  </Link>
-</li>
+      <li className={`nav-item ${activeMenu === "scope" ? "active" : ""}`}>
+        <NavLink
+          className="nav-link"
+          to="/scope"
+          onClick={() => handleMenuClick("scope")}
+       
+        >
+          <i className="fa-solid fa-city"></i>
+          <span>ค่าการปล่อยก๊าซเรือนกระจก(Emission Factor) </span>
+        </NavLink>
+      </li>
 
-<hr className="sidebar-divider my-0" />
+      <hr className="sidebar-divider my-0" />
 
-<li className={`nav-item ${activeMenu === "activity" ? "active" : ""}`}>
-  <Link
-    className="nav-link"
-    to="/scope"
-    onClick={() => handleMenuClick("scope")}
-  >
-
-<i className="fa-solid fa-city"></i>
-    <span>ค่าการปล่อยก๊าซเรือนกระจก(Emission Factor) </span>
-  </Link>
-</li>
-
-<hr className="sidebar-divider my-0" />
-
-<li
-  className={`nav-item ${
-    activeMenu === "components" ? "active" : ""
-  } mt-3`}
->
-  <Link
-    className="nav-link collapsed"
-    data-toggle="collapse"
-    data-target="#collapseTwo"
-    aria-expanded="true"
-    aria-controls="collapseTwo"
-    onClick={() => handleMenuClick("components")}
-  >
-  <i className="fa-solid fa-bars"></i>
-    <span>การตั้งค่า</span>
-  </Link>
-  <div
-    id="collapseTwo"
-    className="collapse"
-    aria-labelledby="headingTwo"
-    data-parent="#accordionSidebar"
-  >
-    <div className="bg-white py-2 collapse-inner rounded">
-      <h6 className="collapse-header">Custom Components:</h6>
-      <Link className="collapse-item" >
-      <i className="fa-solid fa-square-poll-vertical"></i> google map key api
-      </Link>
-      <Link className="collapse-item">
-      <i className="fa-solid fa-file-pdf"></i> การแสดงผลของ หัวข้อ head activity
-      </Link>
-    </div>
-  </div>
-</li>
-
-
-    
+      <li className={`nav-item ${activeMenu === "components" ? "active" : ""} mt-3`}>
+        <NavLink
+          className="nav-link collapsed"
+          data-toggle="collapse"
+          data-target="#collapseTwo"
+          aria-expanded="true"
+          aria-controls="collapseTwo"
+          onClick={() => handleMenuClick("components")}
+        >
+          <i className="fa-solid fa-bars"></i>
+          <span>การตั้งค่า</span>
+        </NavLink>
+        <div
+          id="collapseTwo"
+          className="collapse"
+          aria-labelledby="headingTwo"
+          data-parent="#accordionSidebar"
+        >
+          <div className="bg-white py-2 collapse-inner rounded">
+            <h6 className="collapse-header">Custom Components:</h6>
+            <NavLink to="/setting-googleMap-keyapi" className="collapse-item" >
+              <i className="fa-solid fa-square-poll-vertical"></i> google map
+              key api
+            </NavLink>
+          </div>
+        </div>
+      </li>
 
       <hr className="sidebar-divider d-none d-md-block" />
     </ul>

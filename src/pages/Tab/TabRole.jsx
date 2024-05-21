@@ -78,7 +78,7 @@ function TabRole() {
     };
     
   return (
-    <div className='mt-3'>
+    <div className='mt-3 p-2'>
     <button className="btn btn-primary mb-2" data-toggle="modal" data-target="#ModalAddRole"><i className="fa-solid fa-circle-plus"></i> เพิ่มข้อมูล</button>
      <div className="table-responsive">
         <table className="table table-striped table-bordered table-hover">

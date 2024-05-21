@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import config from '../config';
 
@@ -10,9 +9,10 @@ const containerStyle = {
 };
 
 const center = {
-  lat: 18.7877,
-  lng: 98.9931
+  lat: 13.736717, // ละติจูดของกรุงเทพมหานคร
+  lng: 100.523186 // ลองจิจูดของกรุงเทพมหานคร
 };
+
 
 const locations = [
   { id: 1, position: { lat: 18.7972579, lng: 98.9540093 }, content: "มหาวิทยาลัยเชียงใหม่" },
@@ -24,6 +24,7 @@ const locations = [
 
 function Map() {
   const [mapKey, setMapKey] = useState(null);
+  const [faculty,setFaculty] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -32,28 +33,26 @@ function Map() {
   const fetchData = async () => {
     try {
       const res = await axios.get(config.urlApi + "/googlemapkey");
+      const res1 = await axios.get(config.urlApi + "/place/showFaculty");
       setMapKey(res.data);
     } catch (error) {
       console.log(error.message);
     }
   }
   
-
-
   const keyapi = 'AIzaSyDGCeNt10W2VmFltZC-vARnDltrKjtBQos';
 
-  
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: keyapi
   });
 
   const [map, setMap] = useState(null);
-  const [infoWindowOpen, setInfoWindowOpen] = useState(true); // ตั้งค่าเริ่มต้นให้ InfoWindow เปิดโดยอัตโนมัติ
+  const [infoWindowOpen, setInfoWindowOpen] = useState(true);
 
   const onLoad = (map) => {
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
+    map.panTo(center); // ย้ายมุมมองแผนที่ไปที่ตำแหน่งเชียงใหม่
+    map.setZoom(6); // ตั้งระดับการซูม
     setMap(map);
   };
 
@@ -67,27 +66,30 @@ function Map() {
 
   return isLoaded ? (
     <GoogleMap
-    mapContainerStyle={{ ...containerStyle, borderRadius: '20px' }}
+      mapContainerStyle={{ ...containerStyle, borderRadius: '20px' }}
       center={center}
-      zoom={8}
+      zoom={6}
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
-      <Marker
-        position={center}
-        onClick={toggleInfoWindow}
-      >
-        {infoWindowOpen && (
-          <InfoWindow
-            position={center}
-            onCloseClick={toggleInfoWindow}
-          >
-            <div>
-              <p><Link to="/report">Your custom text or content goes here!</Link></p>
-            </div>
-          </InfoWindow>
-        )}
-      </Marker>
+      {locations.map(location => (
+        <Marker
+          key={location.id}
+          position={location.position}
+          onClick={toggleInfoWindow}
+        >
+          {infoWindowOpen && (
+            <InfoWindow
+              position={location.position}
+              onCloseClick={toggleInfoWindow}
+            >
+              <div>
+                <p>{location.content}</p>
+              </div>
+            </InfoWindow>
+          )}
+        </Marker>
+      ))}
     </GoogleMap>
   ) : <></>;
 }
