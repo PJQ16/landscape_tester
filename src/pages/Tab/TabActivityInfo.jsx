@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import config from "../../config";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Swal from 'sweetalert2';
 import MapFocus from "../../components/MapFocus";
 
@@ -11,7 +11,6 @@ export default function TabActivityInfo() {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const { id, years } = useParams();
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
@@ -63,13 +62,13 @@ export default function TabActivityInfo() {
           title: 'บันทึก',
           text: 'บันทึกข้อมูลสำเร็จ',
           showConfirmButton: false,
-          timer: 800,
+          timer: 1500,
           timerProgressBar: true,
         });
 
         await axios.put(`${config.urlApi}/activity/check/${id}`, payload);
         fetchData(); // Fetch data again to update the state
-        navigate(`/CFO/${years}`)
+        
       }
     } catch (err) {
       Swal.fire({
