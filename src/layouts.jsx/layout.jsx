@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { Children, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import Content from "../components/Content";
 import Footer from "../components/Footer";
 import Modal from "../components/Modal";
 import { Link } from "react-router-dom";
+import ScrollTop from "../components/ScrollTop";
 
-export default function Layout() {
+
+export default function Layout({children}) {
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [show, setShow] = useState(false);
 
@@ -30,6 +32,9 @@ export default function Layout() {
     
     // Add other CSS properties as needed
   };
+
+
+
   return (
     <div>
       <div id="wrapper">
@@ -39,16 +44,16 @@ export default function Layout() {
         <div id="content" >
      
           <div className="container-fluid" >
-          <Content page={currentPage} onPageChange={handlePageChange} />
+      {/*     <Content page={currentPage} onPageChange={handlePageChange} /> */}
+      {children}
           </div>
         </div>
         <Footer />
       </div>
       </div>
 
-      <Link className="scroll-to-top rounded" to="#page-top">
-        <i className="fas fa-angle-up"></i>
-    </Link>
+      <ScrollTop/>
+      
     <Modal show={show} onHide={handleClose} id="logoutModal" title="ออกจากระบบ">
       Select "Logout" below if you are ready to end your current session.
       <div className="modal-footer">

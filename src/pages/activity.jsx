@@ -9,6 +9,7 @@ import axios from "axios";
 import config from "../config";
 import { UserContext } from "../components/MyContext";
 import Swal from "sweetalert2";
+import ScrollTop from "../components/ScrollTop";
 
 
 export default function Activity() {
@@ -16,7 +17,7 @@ export default function Activity() {
   const [selectYears, setSelectYears] = useState("");
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
-  const maxYearsDifference = 3;
+  const maxYearsDifference = 2;
 
   
   const selectyears = Array.from({ length: maxYearsDifference + 1 }, (_, index) => currentYear - index);
@@ -139,9 +140,7 @@ export default function Activity() {
         </div>
       </div>
 
-      <Link className="scroll-to-top rounded" to="#page-top">
-        <i className="fas fa-angle-up"></i>
-      </Link>
+      <ScrollTop/>
       <Modal id="addPeriod" title="เพิ่มปีกิจกรรม">
         <form onSubmit={handlerAddPeriod}>
           <label>เลือกปี</label>

@@ -116,7 +116,7 @@ function TabActivity() {
                 )}
                  {activity.id === 1 ?
                 <>
-                <td>{parseFloat(calculateEF(data_scope).toFixed(4))}</td>
+                <td>{parseFloat(calculateEF(data_scope).toFixed(6))}</td>
                  <td>{data_scope.name ===
                                         "CH4 จากน้ำขังในพื้นที่นา" &&
                                       countAvg !== null &&

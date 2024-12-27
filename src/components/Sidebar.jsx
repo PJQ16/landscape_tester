@@ -76,6 +76,39 @@ export default function Sidebar() {
 
       <hr className="sidebar-divider my-0" />
 
+
+      <li className={`nav-item ${activeMenu === "uploadfile" ? "active" : ""} mt-3`}>
+        <NavLink
+          className="nav-link collapsed"
+          data-toggle="collapse"
+          data-target="#uploadfile"
+          aria-expanded="true"
+          aria-controls="uploadfile"
+          onClick={() => handleMenuClick("uploadfile")}
+        >
+         <i className="fa-solid fa-file-import"></i>
+          <span>อัปโหลดไฟล์เอกสาร</span>
+        </NavLink>
+        <div
+          id="uploadfile"
+          className="collapse"
+          aria-labelledby="headingTwo"
+          data-parent="#accordionSidebar"
+        >
+          <div className="bg-white py-2 collapse-inner rounded">
+            <h6 className="collapse-header">Custom Components:</h6>
+            <NavLink to="/category-uploadfile" className="collapse-item" >
+               <i className="fa-solid fa-list"></i> จัดการหมวดหมู่
+            </NavLink>
+            <NavLink to="/import-file" className="collapse-item" >
+               <i className="fa-solid fa-upload"></i> นำเข้าไฟล์เอกสาร
+            </NavLink>
+          </div>
+        </div>
+      </li>
+
+      <hr className="sidebar-divider my-0" />
+
       <li className={`nav-item ${activeMenu === "user" ? "active" : ""}`}>
         <NavLink
           className="nav-link"
@@ -115,6 +148,7 @@ export default function Sidebar() {
           <span>ค่าการปล่อยก๊าซเรือนกระจก(Emission Factor) </span>
         </NavLink>
       </li>
+      
 
       <hr className="sidebar-divider my-0" />
 

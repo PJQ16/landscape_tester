@@ -3,11 +3,12 @@ import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import Pages from "../components/Pages";
 import Footer from "../components/Footer";
-import { Link } from "react-router-dom";
 import Modal from "../components/Modal";
 import Swal from "sweetalert2";
 import axios from "axios";
 import config from "../config";
+import ScrollTop from "../components/ScrollTop";
+import { Link } from "react-router-dom";
 
 
 function KeyAPI() {
@@ -138,9 +139,9 @@ function KeyAPI() {
                               ></button>
                               <ul className="dropdown-menu">
                                 <li>
-                                  <a className="dropdown-item" onClick={(e) => handlerRemove(item)} href="#">
+                                  <Link className="dropdown-item" onClick={(e) => handlerRemove(item)} >
                                     <i className="fa-solid fa-trash"></i> ลบ
-                                  </a>
+                                  </Link>
                                 </li>
                               </ul>
                             </div>
@@ -167,9 +168,7 @@ function KeyAPI() {
         </div>
       </div>
 
-      <Link className="scroll-to-top rounded" to="#page-top">
-        <i className="fas fa-angle-up"></i>
-      </Link>
+      <ScrollTop/>
       <Modal id="modalAddApi" title="เพิ่ม Google Map Key API">
         <form onSubmit={handdlerAddKeyAPI}>
         <div className="row">

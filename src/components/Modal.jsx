@@ -3,7 +3,7 @@ import React from 'react'
 export default function Modal(props) {
     const modalSizeClass = props.size ? `modal-${props.size}` : 'modal-md';
   return (
-        <div className="modal" id={props.id} tabIndex="-1"  role="dialog" aria-labelledby="exampleModalLabel"
+        <div className="modal" id={props.id}  role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
        <div className={`modal-dialog ${modalSizeClass}`} role="document">
             <div className="modal-content">

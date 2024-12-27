@@ -53,7 +53,7 @@ export default function CardGroup() {
 </div>
   
   {Headcard.map((data,index)=>
-  <div className="card mb-3" style={{maxWidth: "540px"}}>
+  <div className="card mb-3" style={{maxWidth: "540px"}} key={index}>
   <div className="row g-0">
     <div className="col-md-4">
       <img src={`${data.img}`} className="img-fluid rounded-start" alt={`${data.title}`} />
@@ -62,7 +62,7 @@ export default function CardGroup() {
       <div className="card-body">
         <h5 className="card-title">{data.title}</h5>
         <p className="card-text">{data.detail}</p>
-        <Link data-toggle="modal" data-target={`#moreInfo${data.id}`} ><p class="card-text"><small class="text-body-secondary">-อ่านเพิ่มเติม</small></p></Link>
+        <Link data-toggle="modal" data-target={`#moreInfo${data.id}`} ><p className="card-text"><small className="text-body-secondary">-อ่านเพิ่มเติม</small></p></Link>
       </div>
     </div>
   </div>

@@ -19,12 +19,15 @@ import './index.css'
 import CFO from './pages/cfo';
 import Info from './pages/info';
 import KeyAPI from './pages/keyApi';
+import CateFile from './pages/CateFile';
+import ImportFile from './pages/ImportFile';
+import Dashboard from './pages/dashboard';
 export default function App() {
   return (
     <UserDataProvider>
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/" element={<Layout />} />
+      <Route path="/" element={<Dashboard />} />
       <Route path="/campusManagement" element={<Campus />} />
       <Route path="/faculty/:id" element={<Faculty />} />
       <Route path="/register" element={<Register />} />
@@ -40,6 +43,8 @@ export default function App() {
       <Route path='/scope/:id/:head_id' element={<CateScope/>}/>
       <Route path='/setting-googleMap-keyapi' element={<KeyAPI/>}/>
       <Route path="*" element={<NotFound />} />
+      <Route path="/category-uploadfile" element={<CateFile />} />
+      <Route path="/import-file" element={<ImportFile />} />
     </Routes>
   </UserDataProvider>
    

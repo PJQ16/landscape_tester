@@ -71,58 +71,73 @@ const fetchData = async () => {
     }
   };
 
-  const handlerRegister = (e) => {
-    try {
-        e.preventDefault();
-        const payload = {
-            fname: firstName,
-            sname: surName,
-            email: email,
-            password: password,
-            role_id: 4,
-            fac_id: selectedFacultyId
-        };
+  const handlerRegister = async (e) => {
+    e.preventDefault();
 
-        // แปลง payload เป็น x-www-form-urlencoded format
-        const formData = qs.stringify(payload);
+    const payload = {
+        fname: firstName,
+        sname: surName,
+        email: email,
+        password: password,
+        role_id: 4,
+        fac_id: selectedFacultyId
+    };
 
-        if(firstName === '' || surName === '' ||  email==='' || password === '' || selectedFacultyId === ''){
-            Swal.fire({
-                icon:'warning',
-                title:'เตือน',
-                text:'กรุณากรอกข้อมูลให้ครบถ้วน'
-            })
-        }else{
-            Swal.fire({
-                icon:'question',
-                title:'แน่ใจหรือไม่?',
-                text:'ต้องการสมัครสมาชิกใช่หรือไม่',
-                showCancelButton:true
-            }).then(async (res) =>{
-                if(res.isConfirmed){
-                    Swal.fire({
-                        icon:'success',
-                        title:'สำเร็จ',
-                        text:'สมัครสมาชิกสำเร็จ',
-                        showConfirmButton:false,
-                        timer:2000
+    // Convert payload to x-www-form-urlencoded format
+    const formData = qs.stringify(payload);
+
+    if (firstName === '' || surName === '' || email === '' || password === '' || selectedFacultyId === '') {
+        Swal.fire({
+            icon: 'warning',
+            title: 'เตือน',
+            text: 'กรุณากรอกข้อมูลให้ครบถ้วน'
+        });
+    } else {
+        Swal.fire({
+            icon: 'question',
+            title: 'แน่ใจหรือไม่?',
+            text: 'ต้องการสมัครสมาชิกใช่หรือไม่',
+            showCancelButton: true
+        }).then(async (res) => {
+            if (res.isConfirmed) {
+                try {
+                    await axios.post(config.urlApi + '/users/Addusers', formData, {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
                     });
-                     // ส่ง request ไปที่ Express
-            await axios.post(config.urlApi + '/users/Addusers', formData, {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+
+                    // Clear form fields
+                    setFirstName('');
+                    setSurName('');
+                    setEmail('');
+                    setPassword('');
+                    setSelectedFacultyId('');
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'สำเร็จ',
+                        text: 'สมัครสมาชิกสำเร็จ',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+
+                    // Optionally fetch data or navigate to another page
+                    fetchData();
+                    navigate('/user');
+                } catch (error) {
+                    console.error('Error registering user:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'ผิดพลาด',
+                        text: 'ไม่สามารถสมัครสมาชิกได้'
+                    });
+                }
             }
         });
-
-        navigate('/login');
-                }
-            });
-        }
-    } catch (e) {
-        console.log(e.message);
     }
-}
-  
+};
+
 
   return (
     <div className="container mt-5 rounded">

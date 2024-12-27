@@ -3,10 +3,9 @@ import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import Pages from "../components/Pages";
 import Footer from "../components/Footer";
-import { Link } from "react-router-dom";
-import Modal from "../components/Modal";
 import TabUser from "./Tab/TabUser";
 import TabRole from "./Tab/TabRole";
+import ScrollTop from "../components/ScrollTop";
 
 function User() {
   return (
@@ -54,7 +53,7 @@ function User() {
                       id="nav-home"
                       role="tabpanel"
                       aria-labelledby="nav-home-tab"
-                      tabindex="0"
+                  
                     >
                       <TabUser />
                     </div>
@@ -63,7 +62,6 @@ function User() {
                       id="nav-profile"
                       role="tabpanel"
                       aria-labelledby="nav-profile-tab"
-                      tabindex="0"
                     >
                       <TabRole />
                     </div>
@@ -76,9 +74,7 @@ function User() {
         </div>
       </div>
 
-      <Link className="scroll-to-top rounded" to="#page-top">
-        <i className="fas fa-angle-up"></i>
-      </Link>
+      <ScrollTop/>
       
     </div>
   );

@@ -86,7 +86,6 @@ function TabRole() {
                 <tr>
                     <th>ลำดับ</th>
                     <th>บทบาท</th>
-                    
                     <th>จัดการข้อมูล บทบาท</th>
                 </tr>
             </thead>

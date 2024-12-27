@@ -1,44 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Modal from "../components/Modal";
 import { Link } from "react-router-dom";
 import Pages from "../components/Pages";
-import axios from "axios";
-import config from "../config";
 import Tab from "../components/Tab";
 import CardGroup from "../components/CardGroup";
 import CardGroup2 from "../components/CardGroup2";
+import ScrollTop from "../components/ScrollTop";
 
 export default function ExplainPage() {
-    const [categoryData,setCategoryData] = useState([{}]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchDataApi = async () => {
-            try {
-                const res = await axios(config.apiUrl + '/scope/apiActivityScope');
-                setCategoryData(res.data);
-            } catch (e) {
-                console.log('fetchData Error' + e.message);
-            } finally {
-                // ตั้งค่า loading เป็น false เมื่อข้อมูลได้รับการโหลดเสร็จสิ้น
-                setLoading(false);
-            }
-        };
-    
-        // เรียกใช้ fetchDataApi หลังจาก setTimeout 1 วินาที
-        const timeout = setTimeout(() => {
-            fetchDataApi();
-        }, 1000);
-    
-        // Clear timeout เมื่อ component unmount
-        return () => clearTimeout(timeout);
-    }, []);
-    
-    
-
+  
   return (
     <div>
       <div id="wrapper">
@@ -65,9 +38,7 @@ export default function ExplainPage() {
         </div>
       </div>
 
-      <Link className="scroll-to-top rounded" to="#page-top">
-        <i className="fas fa-angle-up"></i>
-      </Link>
+        <ScrollTop/>
       <Modal id="logoutModal" title="ออกจากระบบ">
         Select "Logout" below if you are ready to end your current session.
         <div className="modal-footer">

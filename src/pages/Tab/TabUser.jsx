@@ -6,9 +6,10 @@ import Modal from "../../components/Modal";
 import { Link } from "react-router-dom";
 
 function TabUser() {
-  const [user, setUser] = useState([]);
-  const [roles, setRole] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [roles, setRoles] = useState([]);
   const [searchTerm, setSearchTerm] = useState(''); // State สำหรับการค้นหา
+  const [selectedUser, setSelectedUser] = useState(null); // State สำหรับผู้ใช้ที่ถูกเลือก
 
   useEffect(() => {
     fetchData();
@@ -18,8 +19,8 @@ function TabUser() {
     try {
       const responseUser = await axios.get(config.urlApi + `/users`);
       const responseRole = await axios.get(config.urlApi + `/role`);
-      setUser(responseUser.data);
-      setRole(responseRole.data);
+      setUsers(responseUser.data);
+      setRoles(responseRole.data);
     } catch (e) {
       Swal.fire({
         icon: "error",
@@ -31,23 +32,21 @@ function TabUser() {
 
   const updateRoleUser = async (e, email) => {
     try {
-        e.preventDefault();
-        const payload = {
-            role_id: e.target.elements.roleSelect.value,
-        };
-        await axios.put(
-            config.urlApi + `/update/userRole/${email}`,
-            payload
-        );
-        // ดึงข้อมูลใหม่หลังจากการอัปเดตเสร็จสิ้น
-        document.getElementById('btnClose').click();
-        fetchData();
+      e.preventDefault();
+      const payload = {
+        role_id: e.target.elements.roleSelect.value,
+      };
+      await axios.put(config.urlApi + `/update/userRole/${email}`, payload);
+      // ดึงข้อมูลใหม่หลังจากการอัปเดตเสร็จสิ้น
+      document.getElementById(`btnClose${email}`).click();
+      fetchData();
+    
     } catch (error) {
-        Swal.fire({
-            icon: "error",
-            title: "เกิดข้อผิดพลาด!!",
-            text: error.message,
-        });
+      Swal.fire({
+        icon: "error",
+        title: "เกิดข้อผิดพลาด!!",
+        text: error.message,
+      });
     }
   };
 
@@ -55,17 +54,21 @@ function TabUser() {
     setSearchTerm(e.target.value);
   };
 
-  const filteredUsers = user.filter((users) =>
-    users.fname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    users.sname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    users.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    users.faculty.fac_name.toLowerCase().includes(searchTerm.toLowerCase()) // เพิ่มเงื่อนไขสำหรับหน่วยงาน
+  const filteredUsers = users.filter((user) =>
+    user.fname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.sname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.faculty.fac_name.toLowerCase().includes(searchTerm.toLowerCase()) // เพิ่มเงื่อนไขสำหรับหน่วยงาน
   );
+
+  const handleEdit = (user) => {
+    setSelectedUser(user);
+  };
 
   return (
     <div className="mt-3 p-2">
       <div className="d-flex justify-content-between">
-        <Link to='/register'>
+        <Link to="/register">
           <button className="btn btn-primary mb-2">
             <i className="fa-solid fa-user-plus"></i> เพิ่มผู้ใช้งาน
           </button>
@@ -95,50 +98,26 @@ function TabUser() {
             </tr>
           </thead>
           <tbody className="text-center">
-            {filteredUsers.map((users, index) => (
+            {filteredUsers.map((user, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{users.fname}</td>
-                <td>{users.sname}</td>
-                <td>{users.email}</td>
-                <td>{users.faculty.fac_name}</td>
-                <td>{users.role.role_name}</td>
+                <td>{user.fname}</td>
+                <td>{user.sname}</td>
+                <td>{user.email}</td>
+                <td>{user.faculty.fac_name}</td>
+                <td>{user.role.role_name}</td>
                 <td>
-                  <a
-                    href="#"
+                  <Link
+                    to="#"
                     data-toggle="modal"
-                    data-target={`#modalEditUser${users.id}`}
+                    data-target="#modalEditUser"
+                    onClick={() => handleEdit(user)}
                     className="text-dark text-decoration-none"
-                    id="btnClose"
+                    id={`btnClose${user.email}`}
                   >
                     <i className="fa-solid fa-list-check"></i>
-                  </a>
+                  </Link>
                 </td>
-                <Modal
-                  id={`modalEditUser${users.id}`}
-                  title={`แก้ไขสิทธิ์ผู้ใช้งาน${users.email}`}
-                >
-                  <form onSubmit={(e) => updateRoleUser(e, users.email)}>
-                    <select className="form-control" name="roleSelect">
-                      <option value={`${users.role.id}`}>
-                        {users.role.role_name}
-                      </option>
-                      {roles.map(
-                        (role) =>
-                          users.role.id !== role.id && (
-                            <option key={role.id} value={`${role.id}`}>
-                              {role.role_name}
-                            </option>
-                          )
-                      )}
-                    </select>
-                    <div className="row col-md-12 my-2">
-                    <button type="submit" className="btn btn-secondary">
-                      บันทึก
-                    </button>
-                    </div>
-                  </form>
-                </Modal>
               </tr>
             ))}
           </tbody>
@@ -155,6 +134,34 @@ function TabUser() {
           </tfoot>
         </table>
       </div>
+
+      {selectedUser && (
+        <Modal
+          id="modalEditUser"
+          title={`แก้ไขสิทธิ์ผู้ใช้งาน ${selectedUser.email}`}
+        >
+          <form onSubmit={(e) => updateRoleUser(e, selectedUser.email)}>
+            <select className="form-control" name="roleSelect">
+              <option value={`${selectedUser.role.id}`}>
+                {selectedUser.role.role_name}
+              </option>
+              {roles.map(
+                (role,index) =>
+                  selectedUser.role.id !== role.id && (
+                    <option key={index} value={`${role.id}`}>
+                      {role.role_name}
+                    </option>
+                  )
+              )}
+            </select>
+            <div className="row col-md-12 my-2">
+              <button type="submit" className="btn btn-secondary">
+                บันทึก
+              </button>
+            </div>
+          </form>
+        </Modal>
+      )}
     </div>
   );
 }

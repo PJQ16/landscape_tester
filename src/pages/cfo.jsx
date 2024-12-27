@@ -7,6 +7,7 @@ import Pages from "../components/Pages";
 import Modal from "../components/Modal";
 import axios from "axios";
 import config from "../config";
+import ScrollTop from "../components/ScrollTop";
 
 export default function CFO() {
   const [campusData, setCampusData] = useState([]);
@@ -17,7 +18,7 @@ export default function CFO() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  });
 
   const fetchData = async () => {
     try {
@@ -265,9 +266,7 @@ export default function CFO() {
         </div>
       </div>
 
-      <Link className="scroll-to-top rounded" to="#page-top">
-        <i className="fas fa-angle-up"></i>
-      </Link>
+      <ScrollTop/>
       <Modal></Modal>
     </div>
   );

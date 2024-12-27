@@ -8,6 +8,7 @@ import Modal from "../components/Modal";
 import axios from "axios";
 import config from "../config";
 import Swal from "sweetalert2";
+import ScrollTop from "../components/ScrollTop";
 export default function CateScope() {
   const [cateScope, setCateScope] = useState([]);
   const [headName, setHeadName] = useState("");
@@ -29,7 +30,7 @@ export default function CateScope() {
   const { head_id } = useParams();
   useEffect(() => {
     fetchData();
-  }, []);
+  });
 
   const fetchData = async () => {
     try {
@@ -292,6 +293,67 @@ export default function CateScope() {
     }
   }
   
+
+/*   const insertDataActivity = async (cateId) => {
+    try {
+
+        const existingData = await axios.get(config.urlApi + `/checkExistingDataList/${cateId}`);
+         if (existingData.data.length > 0) {
+          return Swal.fire({
+            icon:'error',
+            title:'error',
+            text:'ข้อมูล ถูกดำเนินเรียบร้อยแล้ว'
+          });
+        } 
+
+
+      const res = await Swal.fire({
+        icon: 'info',
+        title: 'เพิ่มข้อมูล',
+        text: 'ต้องการเพิ่มกิจกรรมนี้ใช่หรือไม่',
+        showCancelButton: true,
+        input: 'text',
+        inputPlaceholder: 'พิมพ์ "YES" เพื่อยืนยัน',
+        inputValidator: (value) => {
+          if (!value || value.toLowerCase() !== 'yes') {
+            return 'โปรดพิมพ์คำว่า "YES" เพื่อยืนยันการลบ.';
+          }
+        }
+      });
+  
+      if (res.isConfirmed) {
+        const { value: year }= await Swal.fire({
+          icon: 'info',
+          text: 'เลือกปีที่ต้องการเพิ่ม',
+          input: 'select',
+          inputOptions: {
+            2022: 2022,
+            2023: 2023
+          },
+          inputPlaceholder: 'เลือกปี',
+          showCancelButton: true
+        });
+
+    
+        
+        if (year) {
+          const payload = {
+            years:year,
+            id:cateId,
+          }
+          await axios.post(config.urlApi + `/newGenerateActivity`,payload);
+        }
+      }
+      fetchData();
+     
+    } catch (e) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "เกิดข้อผิดพลาด",
+      });
+    }
+  } */
   return (
     <div>
       <div id="wrapper">
@@ -350,8 +412,13 @@ export default function CateScope() {
                                 aria-expanded="false"
                               ></button>
                               <ul className="dropdown-menu">
+                             {/*  <li>
+                                  <Link className="dropdown-item" href="#" onClick={(e) => insertDataActivity(item.id)}>
+                                  <i className="fa-solid fa-arrow-up-from-bracket"></i> เพิ่มไปที่กิจกรรม
+                                  </Link>
+                                </li> */}
                                 <li>
-                                  <a
+                                  <Link
                                     className="dropdown-item"
                                     href="#"
                                     onClick={(e) => handdleEdit(item)}
@@ -360,12 +427,12 @@ export default function CateScope() {
                                   >
                                     <i className="fa-solid fa-pen-to-square"></i>{" "}
                                     แก้ไข
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a className="dropdown-item" href="#" onClick={(e) => handlerDelete(item.id)}>
+                                  <Link className="dropdown-item" href="#" onClick={(e) => handlerDelete(item.id)}>
                                     <i className="fa-solid fa-trash"></i> ลบ
-                                  </a>
+                                  </Link>
                                 </li>
                               </ul>
                             </div>
@@ -378,8 +445,8 @@ export default function CateScope() {
                         <th>ลำดับ</th>
                         <th>ก๊าซเรือนกระจก</th>
                         <th>หน่วย</th>
-                        {gases.map((gas, index) => (
-                          <th key={index}>{gas}</th>
+                        {gases.map((gas, gasindex) => (
+                          <th key={gasindex}>{gas}</th>
                         ))}
                         <th>เมนู</th>
                       </tr>
@@ -393,9 +460,7 @@ export default function CateScope() {
         </div>
       </div>
 
-      <Link className="scroll-to-top rounded" to="#page-top">
-        <i className="fas fa-angle-up"></i>
-      </Link>
+      <ScrollTop/>
       <Modal id="modalAddEf" title="เพิ่มค่า Emisson Factors">
         <form onSubmit={handdleCreateData}>
           <div className="row">

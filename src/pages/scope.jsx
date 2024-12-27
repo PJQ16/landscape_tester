@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Pages from "../components/Pages";
 import Modal from "../components/Modal";
 import axios from "axios";
 import config from "../config";
+import ScrollTop from "../components/ScrollTop";
 export default function Scope() {
   const [campus, setCampus] = useState([]);
-  const { id } = useParams();
   useEffect(() => {
     fetchData();
   }, []);
@@ -23,13 +23,6 @@ export default function Scope() {
     }
   };
 
-  const backgroundImageStyle = {
-    backgroundImage: 'url("/img/cloud.jpg")',
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-
-    // Add other CSS properties as needed
-  };
   return (
     <div>
       <div id="wrapper">
@@ -77,9 +70,7 @@ export default function Scope() {
         </div>
       </div>
 
-      <Link className="scroll-to-top rounded" to="#page-top">
-        <i className="fas fa-angle-up"></i>
-      </Link>
+     <ScrollTop/>
       <Modal></Modal>
     </div>
   );
